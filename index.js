@@ -12,7 +12,7 @@ var fileTool = require("./common/tools/file-tool");
 
 
 
-console.log('==', fileTool.getAll('./test/data'));
+console.log('==', fileTool.getAllFiles('./test/data'));
 
 function test() {
 

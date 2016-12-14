@@ -1,9 +1,4 @@
-var mkdirp = require('mkdirp');
 var walkSync = require('walk-sync');
-var fs = require("fs");
-var fse = require('fs-extra');
-var path = require("path");
-
 var FileItem = require("../FileItem");
 
 /**
@@ -25,15 +20,19 @@ function getAll(paths, options) {
     var entry = walkSync.entries(paths, options);
 
     entry.forEach(function (item) {
-        var fileItem = new FileItem(item.basePath, item.relativePath, item.mode, item.size, item.mtime, item.isDirectory());
-        result.push(fileItem);
+        result.push(new FileItem(item.basePath, item.relativePath, item.mode, item.size, item.mtime, item.isDirectory()));
     });
 
     return result;
 }
 
+/**
+ * 获得某路径下所有的文件
+ * @param {String} paths 路径
+ * @returns {Array}
+ */
 function getAllFiles(paths) {
-    return getAll(paths, {directories: true});
+    return getAll(paths, {directories: false});
 }
 
 module.exports = {
