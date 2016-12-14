@@ -8,6 +8,9 @@ var fs = require("fs");
 var fse = require('fs-extra');
 var path = require("path");
 
+var utils = require('./common/utils');
+var r = utils.getHashOfFile('./test/data/fixtures/1.txt');
+console.log('--',r)
 /**
  * 文件对象
  * TODO 考虑是否要加入mode权限
@@ -99,7 +102,7 @@ function copyTo(arr, path) {
     });
 }
 
-test();
+// test();
 
 // fse.copy('./data/init/BX0109H080-4.jpg', './data/new/2221-2240/BX0109H080-4.jpg', function (err) {
 //     if (err) {
