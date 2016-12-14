@@ -1,4 +1,8 @@
+var mkdirp = require('mkdirp');
 var walkSync = require('walk-sync');
+var fs = require("fs");
+var fse = require('fs-extra');
+var path = require("path");
 var FileItem = require("../FileItem");
 
 /**
@@ -35,7 +39,28 @@ function getAllFiles(paths) {
     return getAll(paths, {directories: false});
 }
 
+// True if the file path exists.
+function exists() {
+    var filepath = path.join.apply(path, arguments);
+    return fs.existsSync(filepath);
+}
+
+// True if the path is a directory.
+function isDir() {
+    var filepath = path.join.apply(path, arguments);
+    return exists(filepath) && fs.statSync(filepath).isDirectory();
+}
+
+// True if the path is a file.
+function isFile() {
+    var filepath = path.join.apply(path, arguments);
+    return exists(filepath) && fs.statSync(filepath).isFile();
+}
+
 module.exports = {
     getAll: getAll,
-    getAllFiles: getAllFiles
+    getAllFiles: getAllFiles,
+    exists: exists,
+    isDir: isDir,
+    isFile: isFile
 };

@@ -18,6 +18,7 @@
   "dependencies": {
     "crypto": "0.0.3",
     "fs-extra": "^1.0.0",
+    "glob": "^7.1.1",
     "lodash": "^4.17.2",
     "mkdirp": "^0.5.1",
     "walk-sync": "^0.3.1"
