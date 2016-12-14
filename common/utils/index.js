@@ -16,7 +16,7 @@ function getHash(content, encoding, type) {
 }
 
 /**
- * 获得文件的hash值
+ * 通过文件路径，获得文件的md5 hash值
  *
  * @param {String} filePath 文件路径
  * @returns {String}
@@ -27,11 +27,7 @@ function getHashOfFile(filePath) {
     return getHash(fs.readFileSync(filePath, 'utf8'), 'utf8', 'md5');
 }
 
-/**
- * 对外接口
- * @type {{getHash: getHash, getHashOfFile: getHashOfFile}}
- */
 module.exports = {
     getHash: getHash,
     getHashOfFile: getHashOfFile
-}
+};

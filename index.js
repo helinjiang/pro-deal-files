@@ -8,45 +8,11 @@ var fs = require("fs");
 var fse = require('fs-extra');
 var path = require("path");
 
-var utils = require('./common/utils');
-var r = utils.getHashOfFile('./test/data/fixtures/1.txt');
-console.log('--',r)
-/**
- * 文件对象
- * TODO 考虑是否要加入mode权限
- * @param {String} basePath 基础路径
- * @param {String} relativePath 相对路径
- * @param {String} size 文件大小
- * @param {String} mtime 文件最后修改时间
- * @constructor
- */
-function FileItem(basePath, relativePath, size, mtime) {
-    this.basePath = basePath;
-    this.relativePath = relativePath;
-    this.size = size;
-    this.mtime = mtime;
+var fileTool = require("./common/tools/file-tool");
 
-    this.fileName = path.basename(this.relativePath);
-    this.fullPath = path.join(this.basePath, this.relativePath);
-    this.md5 = '';
-}
 
-/**
- * 获得某路径下所有的文件。
- * @param {String} paths 路径
- * @return {Array} 结果，每个数组的元素为FileItem。
- */
-function getAllFile(paths) {
-    var entry = walkSync.entries(paths, {directories: false});
 
-    var result = [];
-    entry.forEach(function (item) {
-        var fileItem = new FileItem(item.basePath, item.relativePath, item.size, item.mtime);
-        result.push(fileItem);
-    });
-
-    return result;
-}
+console.log('==', fileTool.getAll('./test/data'));
 
 function test() {
 
