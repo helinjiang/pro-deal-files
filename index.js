@@ -8,11 +8,9 @@ var fs = require("fs");
 var fse = require('fs-extra');
 var path = require("path");
 
-var fileTool = require("./common/tools/file-tool");
+var ft = require("./common/tools/file-tool");
 
-
-
-console.log('==', fileTool.getAllFiles('./test/data'));
+console.log('==', ft.getAllFiles('./test/data'));
 
 function test() {
 

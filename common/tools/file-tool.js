@@ -1,4 +1,3 @@
-var mkdirp = require('mkdirp');
 var walkSync = require('walk-sync');
 var fs = require("fs");
 var fse = require('fs-extra');
@@ -46,7 +45,7 @@ function exists() {
 }
 
 // True if the path is a directory.
-function isDir() {
+function isDirectory() {
     var filepath = path.join.apply(path, arguments);
     return exists(filepath) && fs.statSync(filepath).isDirectory();
 }
@@ -61,6 +60,6 @@ module.exports = {
     getAll: getAll,
     getAllFiles: getAllFiles,
     exists: exists,
-    isDir: isDir,
+    isDirectory: isDirectory,
     isFile: isFile
 };
