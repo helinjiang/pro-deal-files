@@ -31,4 +31,10 @@ describe('文件重分组测试：5个文件被分成3组，每组最多2个文�
             return item.isDirectory;
         }).length).to.be.equal(3);
     });
+
+    it('文件分组后文件数目应该为5', function () {
+        expect(fileArr.filter(function (item) {
+            return !item.isDirectory;
+        }).length).to.be.equal(5);
+    });
 });
