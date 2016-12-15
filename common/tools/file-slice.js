@@ -45,12 +45,14 @@ Checker.prototype.getFailList = function () {
  *
  * 拆分文件到不同的分组中保存。
  *
+ * TODO 考虑使用 Promise 方式来判断数个异步是否完成
+ *
  * @param {String} sourcePath 要操作的源文件目录路径
- * @param {String} targetPath 要保存的新的文件的根目录路径
+ * @param {String} destPath 要保存的新的文件的根目录路径
  * @param {Number} groupNum 每组多少个文件
  * @param {Function} callback 回调，传入一个对象 {isSuccess: Boolean, failList: Array}
  */
-function slice(sourcePath, targetPath, groupNum, callback) {
+function slice(sourcePath, destPath, groupNum, callback) {
     var fileArr = ft.getAllFiles(sourcePath),
         length = fileArr.length,
         groupCount = Math.ceil(length / groupNum),
@@ -65,7 +67,7 @@ function slice(sourcePath, targetPath, groupNum, callback) {
 
     for (var i = 0; i < groupCount; i++) {
         var folderName = (groupNum * i + 1) + '-' + groupNum * (i + 1);
-        var savePath = path.join(targetPath, folderName);
+        var savePath = path.join(destPath, folderName);
         var curGroupFileArr = fileArr.slice(groupNum * i, groupNum * (i + 1));
 
         // 循环一个一个文件拷贝
