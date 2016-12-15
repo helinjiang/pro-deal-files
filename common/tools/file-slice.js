@@ -9,8 +9,37 @@
  */
 
 var fse = require('fs-extra');
-var path = require("path");
-var ft = require("./file-tool");
+var path = require('path');
+var ft = require('./file-tool');
+var _ = require('lodash');
+
+function Checker(fileArr) {
+    this.fileArr = fileArr;
+    this.failList = [];
+    this.checked = 0;
+}
+
+Checker.prototype.addFailItem = function (fileItem, err) {
+    this.failList.push(_.assign({
+        copyErr: err
+    }, fileItem));
+};
+
+Checker.prototype.record = function () {
+    this.checked++;
+};
+
+Checker.prototype.isComplete = function () {
+    return this.fileArr.length === this.checked;
+};
+
+Checker.prototype.isSuccess = function () {
+    return !this.failList.length;
+};
+
+Checker.prototype.getFailList = function () {
+    return this.failList;
+};
 
 /**
  *
@@ -19,46 +48,61 @@ var ft = require("./file-tool");
  * @param {String} sourcePath 要操作的源文件目录路径
  * @param {String} targetPath 要保存的新的文件的根目录路径
  * @param {Number} groupNum 每组多少个文件
+ * @param {Function} callback 回调，传入一个对象 {isSuccess: Boolean, failList: Array}
  */
-function slice(sourcePath, targetPath, groupNum) {
+function slice(sourcePath, targetPath, groupNum, callback) {
     var fileArr = ft.getAllFiles(sourcePath),
         length = fileArr.length,
-        groupCount = Math.ceil(length / groupNum);
+        groupCount = Math.ceil(length / groupNum),
+        checker = new Checker(fileArr);
 
-    console.log('Files total is ' + length + ' and should slice group count is ' + groupCount);
+    if (typeof callback !== 'function') {
+        callback = function (data) {
+        };
+    }
+
+    // console.log('Files total is ' + length + ' and should slice group count is ' + groupCount);
 
     for (var i = 0; i < groupCount; i++) {
-
         var folderName = (groupNum * i + 1) + '-' + groupNum * (i + 1);
+        var savePath = path.join(targetPath, folderName);
         var curGroupFileArr = fileArr.slice(groupNum * i, groupNum * (i + 1));
 
-        _copyTo(curGroupFileArr, path.join(targetPath, folderName));
+        // 循环一个一个文件拷贝
+        curGroupFileArr.forEach(function (item) {
+            var from = item.fullPath,
+                to = path.join(savePath, item.fileName);
+
+            // console.log('Next to copy ' + from + ' to ' + to + ' ...');
+
+            fse.copy(from, to, function (err) {
+                checker.record();
+
+                if (err) {
+                    checker.addFailItem(item, err);
+
+                    if (checker.isComplete()) {
+                        callback({
+                            isSuccess: checker.isSuccess(),
+                            failList: checker.getFailList()
+                        })
+                    }
+
+                    return console.error(err);
+                }
+
+                if (checker.isComplete()) {
+                    callback({
+                        isSuccess: checker.isSuccess(),
+                        failList: checker.getFailList()
+                    })
+                }
+                // console.log('Copy ' + from + ' to ' + to + ' success!')
+            });
+        });
     }
 }
 
-/**
- *
- * 将数组中的文件都拷贝到新的路径下，且维持原有的命名方式。
- *
- * @param {Array} fileArr 文件数组，数组元素为 FileItem
- * @param {String} basePath 要保存的目录路径
- * @private
- */
-function _copyTo(fileArr, basePath) {
-    fileArr.forEach(function (item) {
-        var from = item.fullPath,
-            to = path.join(basePath, item.fileName);
-
-        console.log('Next to copy ' + from + ' to ' + to + ' ...');
-
-        fse.copy(from, to, function (err) {
-            if (err) {
-                return console.error(err);
-            }
-            console.log('Copy ' + from + ' to ' + to + ' success!')
-        });
-    });
-}
-
-fse.removeSync('../../test/data/expected')
-slice('../../test/data/fixtures/split', '../../test/data/expected/split', 2);
+module.exports = {
+    slice: slice
+};
