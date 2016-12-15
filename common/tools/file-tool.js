@@ -1,3 +1,11 @@
+/**
+ * 封装的工具方法，用于文件操作。它是 fs 模块和 fs-extra 模块的补充。
+ *
+ * fs：https://nodejs.org/api/fs.html
+ * fs-extra：https://www.npmjs.com/package/fs-extra
+ *
+ */
+
 var walkSync = require('walk-sync');
 var fs = require("fs");
 var fse = require('fs-extra');
