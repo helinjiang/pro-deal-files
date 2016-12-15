@@ -46,6 +46,7 @@ Checker.prototype.getFailList = function () {
  * 拆分文件到不同的分组中保存，并且保持时间戳不变。
  *
  * TODO 考虑使用 Promise 方式来判断数个异步是否完成
+ * TODO 打印进度条，否则大量文件分组时比较慢的情况下，无法知道过程
  *
  * @param {String} sourcePath 要操作的源文件目录路径
  * @param {String} destPath 要保存的新的文件的根目录路径
