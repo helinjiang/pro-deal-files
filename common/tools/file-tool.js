@@ -4,6 +4,8 @@
  * fs：https://nodejs.org/api/fs.html
  * fs-extra：https://www.npmjs.com/package/fs-extra
  *
+ * @author helinjiang
+ *
  */
 
 var walkSync = require('walk-sync');
