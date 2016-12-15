@@ -43,7 +43,7 @@ Checker.prototype.getFailList = function () {
 
 /**
  *
- * 拆分文件到不同的分组中保存。
+ * 拆分文件到不同的分组中保存，并且保持时间戳不变。
  *
  * TODO 考虑使用 Promise 方式来判断数个异步是否完成
  *
@@ -77,7 +77,8 @@ function slice(sourcePath, destPath, groupNum, callback) {
 
             // console.log('Next to copy ' + from + ' to ' + to + ' ...');
 
-            fse.copy(from, to, function (err) {
+            // https://www.npmjs.com/package/fs-extra#copy
+            fse.copy(from, to, {preserveTimestamps: true}, function (err) {
                 checker.record();
 
                 if (err) {
