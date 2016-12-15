@@ -8,10 +8,12 @@
  *
  */
 
-var fse = require('fs-extra');
 var path = require('path');
-var ft = require('./file-tool');
 var _ = require('lodash');
+var Promise = require('bluebird');
+var fse = Promise.promisifyAll(require('fs-extra'));
+
+var ft = require('./file-tool');
 
 function Checker(fileArr) {
     this.fileArr = fileArr;
@@ -107,6 +109,38 @@ function slice(sourcePath, destPath, groupNum, callback) {
     }
 }
 
+
+function slice2(sourcePath, destPath, groupNum) {
+    var fileArr = ft.getAllFiles(sourcePath),
+        length = fileArr.length,
+        groupCount = Math.ceil(length / groupNum),
+        copyFiles = [];
+
+    // console.log('Files total is ' + length + ' and should slice group count is ' + groupCount);
+
+    for (var i = 0; i < groupCount; i++) {
+        var folderName = (groupNum * i + 1) + '-' + groupNum * (i + 1);
+        var savePath = path.join(destPath, folderName);
+        var curGroupFileArr = fileArr.slice(groupNum * i, groupNum * (i + 1));
+
+        // 循环一个一个文件拷贝
+        curGroupFileArr.forEach(function (item) {
+            var from = item.fullPath,
+                to = path.join(savePath, item.fileName);
+
+            // console.log('Next to copy ' + from + ' to ' + to + ' ...');
+
+            // https://www.npmjs.com/package/fs-extra#copy
+            copyFiles.push(fse.copyAsync(from, to, {preserveTimestamps: true}));
+        });
+    }
+
+    return Promise.all(copyFiles).then(function(data) {
+        console.log("all the files were copyed!",data);
+    });
+}
+
 module.exports = {
-    slice: slice
+    slice: slice,
+    slice2: slice2
 };

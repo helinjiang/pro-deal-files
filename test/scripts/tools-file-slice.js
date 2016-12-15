@@ -11,11 +11,16 @@ describe('文件重分组测试：5个文件被分成3组，每组最多2个文�
         fse.removeSync('./test/tmp/split');
 
         // 在本区块的所有测试用例之前执行
-        fileSlice.slice('./test/data/fixtures/split', './test/tmp/split', 2, function (data) {
+        fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2, function (data) {
             fileArr = ft.getAll('./test/tmp/split');
             sliceResult = data;
             done();
         });
+
+        // fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2).then(function(){
+        //     sliceResult = data;
+        //     done();
+        // });
     });
 
     it('文件分组操作完成', function () {
