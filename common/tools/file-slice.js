@@ -35,7 +35,8 @@ function slice(sourcePath, destPath, groupNum) {
     // console.log('Files total is ' + length + ' and should slice group count is ' + groupCount);
 
     for (var i = 0; i < groupCount; i++) {
-        var folderName = (groupNum * i + 1) + '-' + groupNum * (i + 1);
+        var curLimit = groupNum * (i + 1);
+        var folderName = (groupNum * i + 1) + '-' + (length > curLimit ? curLimit : length);
         var savePath = path.join(destPath, folderName);
         var curGroupFileArr = fileArr.slice(groupNum * i, groupNum * (i + 1));
 
