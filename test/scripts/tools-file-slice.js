@@ -10,21 +10,19 @@ describe('文件重分组测试：5个文件被分成3组，每组最多2个文�
         // 删除临时文件目录
         fse.removeSync('./test/tmp/split');
 
-        // 在本区块的所有测试用例之前执行
-        fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2, function (data) {
+        fileSlice.slice('./test/data/fixtures/split', './test/tmp/split', 2).then(function(data){
             fileArr = ft.getAll('./test/tmp/split');
             sliceResult = data;
             done();
         });
-
-        // fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2).then(function(){
-        //     sliceResult = data;
-        //     done();
-        // });
     });
 
     it('文件分组操作完成', function () {
-        expect(sliceResult).to.be.an('object');
+        expect(sliceResult).to.be.an('Array');
+    });
+
+    it('文件分组操作操作了5个文件', function () {
+        expect(sliceResult.length).to.be.equal(5);
     });
 
     it('文件分组后文件和文件夹总数应该为8', function () {
