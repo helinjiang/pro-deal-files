@@ -19,7 +19,7 @@ describe('文件重分组：5个文件，每组最多2个文件，可分成3组'
     });
 
     it('文件分组操作完成', function () {
-        expect(sliceResult).to.be.an('Array');
+        expect(sliceResult).to.be.an('array');
     });
 
     it('文件分组操作操作了5个文件', function () {
@@ -59,7 +59,7 @@ describe('文件重分组：5个文件，每组最多3个文件，可分成2组'
     });
 
     it('文件分组操作完成', function () {
-        expect(sliceResult).to.be.an('Array');
+        expect(sliceResult).to.be.an('array');
     });
 
     it('文件分组操作操作了5个文件', function () {
