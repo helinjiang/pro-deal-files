@@ -19,6 +19,6 @@ var fse = require('fs-extra');
 
 var fileFilter = require('./common/tools/file-filter');
 
-var result = fileFilter.filterByTime('./test/data/fixtures/filter/same-time');
+var result = fileFilter.filterByMd5('./test/data/fixtures/filter/same-md5');
 
 console.log(result);
