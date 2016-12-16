@@ -21,37 +21,7 @@ var ft = require('./file-tool');
  * @return {Object} 结果 {fileName: [FileItem, FileItem], fileName: [FileItem, FileItem]}
  */
 function filterByName(sourcePath) {
-    var fileArr = ft.getAllFiles(sourcePath),
-        map = {},
-        multiNameArr = [],
-        result = {};
-
-    // 获取 map 和 multiNameArr
-    fileArr.forEach(function (fileItem) {
-        var fileName = fileItem.fileName,
-            arr = map[fileName];
-
-        // 初始化
-        if (!arr) {
-            arr = [];
-        }
-
-        arr.push(fileItem);
-
-        map[fileName] = arr;
-
-        // 判断是否已经有重名的文件了
-        if (arr.length > 1) {
-            multiNameArr.push(fileName);
-        }
-    });
-
-    // 返回重复的文件map
-    multiNameArr.forEach(function (fileName) {
-        result[fileName] = map[fileName];
-    });
-
-    return result;
+    return _filter(ft.getAllFiles(sourcePath), 'fileName');
 }
 
 /**
@@ -61,14 +31,28 @@ function filterByName(sourcePath) {
  * @return {Object} 结果 {fileName: [FileItem, FileItem], fileName: [FileItem, FileItem]}
  */
 function filterBySize(sourcePath) {
-    var fileArr = ft.getAllFiles(sourcePath),
-        map = {},
+    return _filter(ft.getAllFiles(sourcePath), 'size');
+}
+
+/**
+ * 过滤
+ * @param {Array} fileArr 文件数组
+ * @param {String} filterKey 过滤项，可选项为 fileName, size, mtime
+ * @return {Object} 结果 {fileName: [FileItem, FileItem], fileName: [FileItem, FileItem]}
+ * @private
+ */
+function _filter(fileArr, filterKey) {
+    var map = {},
         multiNameArr = [],
         result = {};
 
+    if (['fileName', 'size', 'mtime'].indexOf(filterKey) < 0) {
+        return result;
+    }
+
     // 获取 map 和 multiNameArr
     fileArr.forEach(function (fileItem) {
-        var fileName = fileItem.size + '',
+        var fileName = fileItem[filterKey] + '',
             arr = map[fileName];
 
         // 初始化
