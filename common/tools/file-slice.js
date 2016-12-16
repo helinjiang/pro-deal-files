@@ -12,14 +12,13 @@ var path = require('path');
 var _ = require('lodash');
 var Promise = require('bluebird');
 var fse = Promise.promisifyAll(require('fs-extra'));
+var ProgressBar = require('progress');
 
 var ft = require('./file-tool');
 
 /**
  *
  * 拆分文件到不同的分组中保存，并且保持时间戳不变。
- *
- * TODO 打印进度条，否则大量文件分组时比较慢的情况下，无法知道过程
  *
  * @param {String} sourcePath 要操作的源文件目录路径
  * @param {String} destPath 要保存的新的文件的根目录路径
@@ -33,6 +32,14 @@ function slice(sourcePath, destPath, groupNum) {
         copyFiles = [];
 
     // console.log('Files total is ' + length + ' and should slice group count is ' + groupCount);
+
+    // 进度条
+    var bar = new ProgressBar('copying [:bar] :current/:total :percent(:etas) , already cost :elapseds ', {
+        complete: '=',
+        incomplete: ' ',
+        width: 20,
+        total: length
+    });
 
     for (var i = 0; i < groupCount; i++) {
         var curLimit = groupNum * (i + 1);
@@ -49,8 +56,10 @@ function slice(sourcePath, destPath, groupNum) {
 
             // https://www.npmjs.com/package/fs-extra#copy
             copyFiles.push(fse.copyAsync(from, to, {preserveTimestamps: true}).then(function () {
+                bar.tick();
                 return _.assign({}, item);
             }).catch(function (err) {
+                bar.tick();
                 return _.assign({
                     copyErr: err
                 }, item);
