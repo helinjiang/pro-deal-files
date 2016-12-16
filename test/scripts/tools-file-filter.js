@@ -62,3 +62,35 @@ describe('文件过滤：找出相同文件大小的文件', function () {
         })).to.same.members(['unique-size-1.txt', 'unique-size-1-same.txt']);
     });
 });
+
+
+describe('文件过滤：找出相同文件时间戳的文件', function () {
+    var filterResult;
+
+    before(function () {
+        filterResult = fileFilter.filterByTime('./test/data/fixtures/filter/same-time');
+    });
+
+    it('文件过滤操作完成', function () {
+        expect(filterResult).to.be.an('object');
+    });
+
+    it('文件过滤之后：只存在一条结果', function () {
+        expect(Object.keys(filterResult)).to.have.lengthOf(1);
+    });
+
+    it('文件过滤之后：相同文件的文件时间戳为 1481873229622', function () {
+        expect(filterResult).to.have.property('1481873229622')
+            .that.is.an('array');
+    });
+
+    it('文件过滤之后：有两个文件时间戳都是 1481873229622', function () {
+        expect(filterResult['1481873229622']).to.have.lengthOf(2);
+    });
+
+    it('文件过滤之后：这两个文件时间戳都是1481873229622，但文件名或路径不一样', function () {
+        expect(filterResult['1481873229622'].map(function (item) {
+            return item.relativePath;
+        })).to.same.members(['unique-time-1.txt', 'unique-time-1-same.txt']);
+    });
+});

@@ -35,6 +35,16 @@ function filterBySize(sourcePath) {
 }
 
 /**
+ * 获得某路径下所有相同文件时间戳的重复文件信息。
+ *
+ * @param {String} sourcePath 路径
+ * @return {Object} 结果 {fileName: [FileItem, FileItem], fileName: [FileItem, FileItem]}
+ */
+function filterByTime(sourcePath) {
+    return _filter(ft.getAllFiles(sourcePath), 'mtime');
+}
+
+/**
  * 过滤
  * @param {Array} fileArr 文件数组
  * @param {String} filterKey 过滤项，可选项为 fileName, size, mtime
@@ -160,5 +170,6 @@ function _filter(fileArr, filterKey) {
 module.exports = {
     filterByName: filterByName,
     filterBySize: filterBySize,
+    filterByTime: filterByTime,
     // getSameMd5: getSameMd5
 };
