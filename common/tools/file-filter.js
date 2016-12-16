@@ -11,36 +11,64 @@ var path = require('path');
 var _ = require('lodash');
 var Promise = require('bluebird');
 var fse = Promise.promisifyAll(require('fs-extra'));
-var ProgressBar = require('progress');
 
 var ft = require('./file-tool');
 
 /**
  * 获得某路径下所有同名的重复文件信息。
+ *
  * @param {String} sourcePath 路径
  * @return {Object} 结果 {fileName: [FileItem, FileItem], fileName: [FileItem, FileItem]}
  */
 function filterByName(sourcePath) {
-    var fileArr = ft.getAllFiles(sourcePath);
-
-    /**
-     * map 的结构
-     *  {
-            fileName1: {
-                count: 1,
-                list: [fileItem1,fileItem2]
-            }
-        }
-     *
-     * multiNameArr 是大于 1 个的文件名字数组
-     */
-    var map = {},
+    var fileArr = ft.getAllFiles(sourcePath),
+        map = {},
         multiNameArr = [],
         result = {};
 
     // 获取 map 和 multiNameArr
     fileArr.forEach(function (fileItem) {
         var fileName = fileItem.fileName,
+            arr = map[fileName];
+
+        // 初始化
+        if (!arr) {
+            arr = [];
+        }
+
+        arr.push(fileItem);
+
+        map[fileName] = arr;
+
+        // 判断是否已经有重名的文件了
+        if (arr.length > 1) {
+            multiNameArr.push(fileName);
+        }
+    });
+
+    // 返回重复的文件map
+    multiNameArr.forEach(function (fileName) {
+        result[fileName] = map[fileName];
+    });
+
+    return result;
+}
+
+/**
+ * 获得某路径下所有相同文件大小的重复文件信息。
+ *
+ * @param {String} sourcePath 路径
+ * @return {Object} 结果 {fileName: [FileItem, FileItem], fileName: [FileItem, FileItem]}
+ */
+function filterBySize(sourcePath) {
+    var fileArr = ft.getAllFiles(sourcePath),
+        map = {},
+        multiNameArr = [],
+        result = {};
+
+    // 获取 map 和 multiNameArr
+    fileArr.forEach(function (fileItem) {
+        var fileName = fileItem.size + '',
             arr = map[fileName];
 
         // 初始化
@@ -147,6 +175,6 @@ function filterByName(sourcePath) {
 
 module.exports = {
     filterByName: filterByName,
-    // getSameSize: getSameSize,
+    filterBySize: filterBySize,
     // getSameMd5: getSameMd5
 };
