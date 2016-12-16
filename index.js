@@ -17,17 +17,8 @@
 
 var fse = require('fs-extra');
 
-var fileSlice = require('./common/tools/file-slice');
+var fileFilter = require('./common/tools/file-filter');
 
-// fse.removeSync('./test/tmp/split');
-//
-// fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2).then(function(){
-//     console.log('end');
-// });
+var result = fileFilter.filterByTime('./test/data/fixtures/filter/same-time');
 
-fileSlice.slice('/webstormproj/seperate-files/data/init', '/webstormproj/seperate-files/data/new2', 20).then(function(){
-    console.log('end');
-});
-
-
-// fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 3);
+console.log(result);
