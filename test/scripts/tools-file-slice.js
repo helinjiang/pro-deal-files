@@ -8,10 +8,10 @@ describe('文件重分组测试：5个文件，每组最多2个文件，可分�
 
     before(function (done) {
         // 删除临时文件目录
-        fse.removeSync('./test/tmp/split/5-2');
+        fse.removeSync('./test/tmp/slice/5-2');
 
-        fileSlice.slice('./test/data/fixtures/split', './test/tmp/split/5-2', 2).then(function(data){
-            fileArr = ft.getAll('./test/tmp/split/5-2');
+        fileSlice.slice('./test/data/fixtures/slice', './test/tmp/slice/5-2', 2).then(function(data){
+            fileArr = ft.getAll('./test/tmp/slice/5-2');
             sliceResult = data;
             done();
         });
@@ -47,10 +47,10 @@ describe('文件重分组测试：5个文件，每组最多3个文件，可分�
 
     before(function (done) {
         // 删除临时文件目录
-        fse.removeSync('./test/tmp/split/5-3');
+        fse.removeSync('./test/tmp/slice/5-3');
 
-        fileSlice.slice('./test/data/fixtures/split', './test/tmp/split/5-3', 3).then(function(data){
-            fileArr = ft.getAll('./test/tmp/split/5-3');
+        fileSlice.slice('./test/data/fixtures/slice', './test/tmp/slice/5-3', 3).then(function(data){
+            fileArr = ft.getAll('./test/tmp/slice/5-3');
             sliceResult = data;
             done();
         });
