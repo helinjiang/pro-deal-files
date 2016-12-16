@@ -5,7 +5,7 @@ describe('文件过滤：找出相同文件名的文件', function () {
     var filterResult;
 
     before(function () {
-        filterResult = fileFilter.filterByName('./test/data/fixtures/filter/same-name');
+        filterResult = fileFilter.filterByName('./test/data/fixtures/filter/same-name', {noProgressBar: true});
     });
 
     it('文件过滤操作完成', function () {
@@ -36,7 +36,7 @@ describe('文件过滤：找出相同文件大小的文件', function () {
     var filterResult;
 
     before(function () {
-        filterResult = fileFilter.filterBySize('./test/data/fixtures/filter/same-size');
+        filterResult = fileFilter.filterBySize('./test/data/fixtures/filter/same-size', {noProgressBar: true});
     });
 
     it('文件过滤操作完成', function () {
@@ -67,7 +67,7 @@ describe('文件过滤：找出相同文件时间戳的文件', function () {
     var filterResult;
 
     before(function () {
-        filterResult = fileFilter.filterByTime('./test/data/fixtures/filter/same-time');
+        filterResult = fileFilter.filterByTime('./test/data/fixtures/filter/same-time', {noProgressBar: true});
     });
 
     it('文件过滤操作完成', function () {
@@ -99,7 +99,7 @@ describe('文件过滤：找出相同文件md5的文件', function () {
     var filterResult;
 
     before(function () {
-        filterResult = fileFilter.filterByMd5('./test/data/fixtures/filter/same-md5');
+        filterResult = fileFilter.filterByMd5('./test/data/fixtures/filter/same-md5', {noProgressBar: true});
     });
 
     it('文件过滤操作完成', function () {

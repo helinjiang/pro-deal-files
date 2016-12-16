@@ -20,5 +20,16 @@ var fse = require('fs-extra');
 var fileFilter = require('./common/tools/file-filter');
 
 var result = fileFilter.filterByMd5('./test/data/fixtures/filter/same-md5');
+// var result = fileFilter.filterByMd5('/webstormproj/seperate-files/data/new2');
 
-console.log(result);
+// console.log(result);
+
+Object.keys(result).forEach(function(md5){
+    console.log('\n');
+    console.log(md5);
+
+    var arr = result[md5];
+    arr.forEach(function(fileItem){
+        console.log(fileItem.fullPath);
+    })
+})
