@@ -23,23 +23,33 @@ var ft = require('./file-tool');
  * @param {String} sourcePath 要操作的源文件目录路径
  * @param {String} destPath 要保存的新的文件的根目录路径
  * @param {Number} groupNum 每组多少个文件
+ * @param {Object} [options] 更多选项
+ * @param {Boolean} [options.noProgressBar] 不要出现进度条
  * @return {Promise}
  */
-function slice(sourcePath, destPath, groupNum) {
+function slice(sourcePath, destPath, groupNum, options) {
     var fileArr = ft.getAllFiles(sourcePath),
         length = fileArr.length,
         groupCount = Math.ceil(length / groupNum),
         copyFiles = [];
 
+    if (!options) {
+        options = {
+            noProgressBar: false
+        };
+    }
+
     // console.log('Files total is ' + length + ' and should slice group count is ' + groupCount);
 
     // 进度条
-    var bar = new ProgressBar('copying [:bar] :current/:total :percent(:etas) , already cost :elapseds ', {
-        complete: '=',
-        incomplete: ' ',
-        width: 20,
-        total: length
-    });
+    if (!options.noProgressBar) {
+        var bar = new ProgressBar('copying [:bar] :current/:total :percent(:etas) , already cost :elapseds ', {
+            complete: '=',
+            incomplete: ' ',
+            width: 20,
+            total: length
+        });
+    }
 
     for (var i = 0; i < groupCount; i++) {
         var curLimit = groupNum * (i + 1);
@@ -56,10 +66,14 @@ function slice(sourcePath, destPath, groupNum) {
 
             // https://www.npmjs.com/package/fs-extra#copy
             copyFiles.push(fse.copyAsync(from, to, {preserveTimestamps: true}).then(function () {
-                bar.tick();
+                if (!options.noProgressBar) {
+                    bar.tick();
+                }
                 return _.assign({}, item);
             }).catch(function (err) {
-                bar.tick();
+                if (!options.noProgressBar) {
+                    bar.tick();
+                }
                 return _.assign({
                     copyErr: err
                 }, item);

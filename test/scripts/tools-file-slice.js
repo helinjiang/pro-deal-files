@@ -3,14 +3,15 @@ var fileSlice = require('../../common/tools/file-slice');
 var ft = require("../../common/tools/file-tool");
 var expect = require('chai').expect;
 
-describe('文件重分组测试：5个文件，每组最多2个文件，可分成3组', function () {
+describe('文件重分组：5个文件，每组最多2个文件，可分成3组', function () {
     var fileArr, sliceResult;
 
     before(function (done) {
         // 删除临时文件目录
         fse.removeSync('./test/tmp/slice/5-2');
 
-        fileSlice.slice('./test/data/fixtures/slice', './test/tmp/slice/5-2', 2).then(function(data){
+        // 重分组操作
+        fileSlice.slice('./test/data/fixtures/slice', './test/tmp/slice/5-2', 2, {noProgressBar: true}).then(function (data) {
             fileArr = ft.getAll('./test/tmp/slice/5-2');
             sliceResult = data;
             done();
@@ -42,14 +43,15 @@ describe('文件重分组测试：5个文件，每组最多2个文件，可分�
     });
 });
 
-describe('文件重分组测试：5个文件，每组最多3个文件，可分成2组', function () {
+describe('文件重分组：5个文件，每组最多3个文件，可分成2组', function () {
     var fileArr, sliceResult;
 
     before(function (done) {
         // 删除临时文件目录
         fse.removeSync('./test/tmp/slice/5-3');
 
-        fileSlice.slice('./test/data/fixtures/slice', './test/tmp/slice/5-3', 3).then(function(data){
+        // 重分组操作
+        fileSlice.slice('./test/data/fixtures/slice', './test/tmp/slice/5-3', 3, {noProgressBar: true}).then(function (data) {
             fileArr = ft.getAll('./test/tmp/slice/5-3');
             sliceResult = data;
             done();
