@@ -23,11 +23,11 @@ describe('文件重分组：5个文件，每组最多2个文件，可分成3组'
     });
 
     it('文件分组操作操作了5个文件', function () {
-        expect(sliceResult.length).to.be.equal(5);
+        expect(sliceResult).to.have.lengthOf(5);
     });
 
     it('文件分组后文件和文件夹总数应该为8', function () {
-        expect(fileArr.length).to.be.equal(8);
+        expect(fileArr).to.have.lengthOf(8);
     });
 
     it('文件分组后文件夹数目应该为3', function () {
@@ -63,11 +63,11 @@ describe('文件重分组：5个文件，每组最多3个文件，可分成2组'
     });
 
     it('文件分组操作操作了5个文件', function () {
-        expect(sliceResult.length).to.be.equal(5);
+        expect(sliceResult).to.have.lengthOf(5);
     });
 
-    it('文件分组后文件和文件夹总数应该为8', function () {
-        expect(fileArr.length).to.be.equal(7);
+    it('文件分组后文件和文件夹总数应该为7', function () {
+        expect(fileArr).to.have.lengthOf(7);
     });
 
     it('文件分组后文件夹数目应该为2', function () {
