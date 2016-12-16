@@ -19,15 +19,15 @@ var fse = require('fs-extra');
 
 var fileSlice = require('./common/tools/file-slice');
 
-fse.removeSync('./test/tmp/split');
-
-fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2).then(function(){
-    console.log('end');
-});
-
-// fileSlice.slice2('/webstormproj/seperate-files/data/init', '/webstormproj/seperate-files/data/new', 20).then(function(){
+// fse.removeSync('./test/tmp/split');
+//
+// fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 2).then(function(){
 //     console.log('end');
 // });
+
+fileSlice.slice('/webstormproj/seperate-files/data/init', '/webstormproj/seperate-files/data/new2', 20).then(function(){
+    console.log('end');
+});
 
 
 // fileSlice.slice2('./test/data/fixtures/split', './test/tmp/split', 3);
