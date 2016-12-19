@@ -1,0 +1,34 @@
+{
+  "basePath": "./test/data/fixtures/save/md5",
+  "map": {
+    "dfb875049cd98cf8bb32ea8d6333b367": [
+      {
+        "p": "unique-md5-1-same.txt",
+        "s": 13,
+        "t": 1481873229622
+      },
+      {
+        "p": "unique-md5-1.txt",
+        "s": 13,
+        "t": 1481873229622
+      }
+    ],
+    "1fd67d43afbe380306a2320bdf2f01c8": [
+      {
+        "p": "unique-md5-2.txt",
+        "s": 13,
+        "t": 1481874676053
+      }
+    ],
+    "8ec1beef542f3af0eb9e95b21a203c6e": [
+      {
+        "p": "unique-md5-3.txt",
+        "s": 13,
+        "t": 1481874668297
+      }
+    ]
+  },
+  "multiArr": [
+    "dfb875049cd98cf8bb32ea8d6333b367"
+  ]
+}
