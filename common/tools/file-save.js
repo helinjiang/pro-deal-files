@@ -6,7 +6,6 @@
  */
 
 var path = require('path');
-var _ = require('lodash');
 var Promise = require('bluebird');
 var fse = Promise.promisifyAll(require('fs-extra'));
 var ProgressBar = require('progress');

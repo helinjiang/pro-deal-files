@@ -34,21 +34,26 @@
 //     })
 // })
 
+// var fileCompare = require('./common/tools/file-compare');
+//
+// var result = fileCompare.compare('./test/data/fixtures/compare/a', './test/data/fixtures/compare/b');
+// result.different.forEach(function(fileItem){
+//     console.log(fileItem.relativePath);
+// });
+// // console.log('\n');
+// Object.keys(result.same).forEach(function(md5){
+//     console.log('\n');
+//     console.log(md5);
+//
+//     var arr = result.same[md5];
+//     arr.forEach(function(fileItem){
+//         console.log(fileItem.relativePath);
+//     })
+// });
 
-
-var fileCompare = require('./common/tools/file-compare');
-
-var result = fileCompare.compare('./test/data/fixtures/compare/a', './test/data/fixtures/compare/b');
-result.different.forEach(function(fileItem){
-    console.log(fileItem.relativePath);
-});
-// console.log('\n');
-Object.keys(result.same).forEach(function(md5){
-    console.log('\n');
-    console.log(md5);
-
-    var arr = result.same[md5];
-    arr.forEach(function(fileItem){
-        console.log(fileItem.relativePath);
-    })
-});
+// var fileSave = require('./common/tools/file-save');
+// fileSave.saveJsonMd5('/webstormproj/seperate-files/data/new2').then(function (data) {
+//     console.log('then data');
+// }).catch(function (data) {
+//     console.log('catch data');
+// })
