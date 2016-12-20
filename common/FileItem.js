@@ -33,13 +33,17 @@ function FileItem(basePath, relativePath, mode, size, mtime, isDirectory) {
  */
 FileItem.prototype.getMd5 = function () {
     // 如果当前是目录，则直接返回空即可
-    if(this.isDirectory){
+    if (this.isDirectory) {
         return '';
     }
 
     // 缓存结果，不需要每次获取都重新去计算
     if (!this._md5) {
-        this._md5 = utils.getHashOfFile(this.fullPath);
+        try {
+            this._md5 = utils.getHashOfFile(this.fullPath);
+        } catch (err) {
+            console.error('get md5 err', this.fullPath, err);
+        }
     }
 
     return this._md5;

@@ -6,10 +6,12 @@ var expect = require('chai').expect;
 describe('文件保存：根据文件的md5值，保存一份记录在本地', function () {
     before(function () {
         fse.removeSync('./test/data/fixtures/save/md5/data.json');
+        fse.removeSync('./test/data/fixtures/save/md5/data-muti.json');
     });
 
     after(function () {
         fse.removeSync('./test/data/fixtures/save/md5/data.json');
+        fse.removeSync('./test/data/fixtures/save/md5/data-muti.json');
     });
 
     it('文件保存操作完成', function (done) {

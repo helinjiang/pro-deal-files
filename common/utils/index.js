@@ -24,7 +24,7 @@ function getHash(content, encoding, type) {
  * @date   2015-11-15
  */
 function getHashOfFile(filePath) {
-    return getHash(fs.readFileSync(filePath, 'utf8'), 'utf8', 'md5');
+    return getHash(fs.readFileSync(filePath), 'utf8', 'md5');
 }
 
 module.exports = {
