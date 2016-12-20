@@ -18,6 +18,10 @@ function getHash(content, encoding, type) {
 /**
  * 通过文件路径，获得文件的md5 hash值
  *
+ * 在 win7 系统中（64位，i5-3470，12G内存）做过测试，获得 6684 张图片包括部分视频（一共27.5GB），用时为 391.5 秒。
+ * 平均每秒能够处理 72 M左右的数据。
+ * 运行过程中，CPU使用率没有特别大的变化，内存占用率大概会多占用500M的空间
+ *
  * @param {String} filePath 文件路径
  * @returns {String}
  * @author helinjiang

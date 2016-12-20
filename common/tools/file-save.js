@@ -26,7 +26,7 @@ function saveJsonMd5(sourcePath, options) {
 
     // 进度条
     if (!options.noProgressBar) {
-        var bar = new ProgressBar('filtering [:bar] :current/:total :percent(:etas) , already cost :elapseds ', {
+        var bar = new ProgressBar('[:bar] :current/:total :percent(:etas) , already cost :elapseds ', {
             complete: '=',
             incomplete: ' ',
             width: 20,
