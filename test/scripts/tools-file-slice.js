@@ -18,6 +18,10 @@ describe('文件重分组：5个文件，每组最多2个文件，可分成3组'
         });
     });
 
+    after(function () {
+        fse.removeSync('./test/tmp/slice/5-2');
+    });
+
     it('文件分组操作完成', function () {
         expect(sliceResult).to.be.an('array');
     });
@@ -56,6 +60,10 @@ describe('文件重分组：5个文件，每组最多3个文件，可分成2组'
             sliceResult = data;
             done();
         });
+    });
+
+    after(function () {
+        fse.removeSync('./test/tmp/slice/5-3');
     });
 
     it('文件分组操作完成', function () {
